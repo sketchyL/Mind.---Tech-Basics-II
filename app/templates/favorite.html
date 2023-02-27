@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block bodycontent %}
+    <div class="help">
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary-help mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#help_favorites">
+                Help
+            </button>
+        </div>
+        <div class="modal fade" id="help_favorites" tabindex="-1" role="dialog" aria-labelledby="help_favorites_modal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Favorites</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>In this list you can find all your favorite exercises.
+
+                            To favorite an exercise, simply tap the favorite button in the audioplayer.</p>
+                        <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-favorites">
+
+
+        <div class="container">
+            <h1>These are your favorite meditations:</h1>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for item in favorites %}
+                    <div class="col">
+
+                        <div class="card">
+                            <img src="{{ item.cover_url }}" class="card-img-top" alt="{{ item.cover_alt_text }}"
+                                 style="min-width: auto; height: 300px; object-fit:cover"/>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <p class="card-text">{{ item.description }} </p>
+                                <a href="{{ url_for("audioplayer", med_id=item.id) }}" class="btn btn-light">Play</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+    </hr>
+
+
+
+    </div> </div>
+{% endblock %}
+
+

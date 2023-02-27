@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+    <div class="help">
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary-help mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#help_favorites">
+                Help
+            </button>
+        </div>
+        <div class="modal fade" id="help_favorites" tabindex="-1" role="dialog" aria-labelledby="help_favorites_modal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Library</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>Browse through all the available meditations and mindfulness exercises here. They are all
+                            ordered based on different categories.
+                            You also have quick access to your favorites. To favorite, simply tap the favorite icon in
+                            the audioplayer.
+                        </p>
+                        <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <div class="favorites-cat">
+
+
+            {% if current_user %}
+                <div class="card text-center">
+                    <img src="{{ url_for('static',filename='images/favorites.jpg') }}" class="card-img" alt="favorites"
+                         style="height: 200px; width: auto; object-fit:cover"/>
+                    <div class="card-img-overlay">
+                        <h5 class="card-title">{{ current_user.username }}, here are your Favorites!</h5>
+                        <a href="{{ url_for("favorites") }}" class="btn btn-warning">Start listening now</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+        <div class="categories">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for category in category_overview %}
+
+
+                    <div class="col-sm-3">
+                        <div class="card text-center">
+                            <img src="{{ category.cat_img_url }}" class="card-img" alt="{{ category.cat_img_alt_text }}"
+                                 style="min-width: 18rem; height: 300px; object-fit:cover"/>
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">{{ category.cat_name }}</h5>
+                                <p class="card-text">{{ category.cat_description }}</p>
+                                <a href="{{ url_for("library", category=category.cat_name) }}" class="btn btn-warning">Start
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+    <div class="help">
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary-help mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#help_favorites">
+                Help
+            </button>
+        </div>
+        <div class="modal fade" id="help_favorites" tabindex="-1" role="dialog" aria-labelledby="help_favorites_modal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Homepage</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Daily Tracker</h6>
+                        <p>Track your daily meditation journey here. Just click on the checkbox and submit, to build up
+                            your streak.</p>
+                        <h6>Daily Suggestions</h6>
+                        <p>Here you can find a few exercises of varying length, changing daily, so you can dive into
+                            mindfulness immediately.
+                            It's up to you if you do one, two or all of the daily suggestions - do what works for you!
+                            Even one moment of mindfulness per day will do wonders.
+                        </p>
+                        <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-daily-2">
+        <div class="container">
+
+
+            {% if current_user.username %}
+                <h1>Hello {{ current_user.username }}!</h1>
+                <div class="tracker">
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <p>
+                            {{ form.streak_tick }}
+                            {{ form.streak_tick.label }}
+                        </p>
+
+                        {{ form.submit() }}
+
+                    </form>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card-streak-title">Your Current Streak!</h5>
+                                    <p aria-label="Flame emoji" class="card-text card-streak">🔥{{ current_user.current_streak }} </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title card-streak-title">Your Best Streak!</h5>
+                                    <p aria-label="Flame emoji" class="card-text card-streak">🔥{{ current_user.best_streak }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+
+
+
+
+
+
+                <div class="card-daily">
+                    <div class="container">
+                        <h1 class="card-title-daily">Try these meditations today!</h1>
+
+                        <div class="daily">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                <div class="col">
+                                    <h1>Short Meditation</h1>
+                                    <div class="card">
+                                        <img src="{{ random_short.cover_url }}" class="card-img-top" alt="{{ random_short.cover_alt_text }}"
+                                             style="min-width: 18rem; height: 300px; object-fit:cover"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ random_short.title }}</h5>
+                                            <p class="card-text">{{ random_short.description }} </p>
+                                            <a href="{{ url_for("audioplayer", med_id=random_short.id) }}"
+                                               class="btn btn-light">Play</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                    disabled>{{ random_short.time }} min
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <h1>Medium Meditation</h1>
+                                    <div class="card">
+                                        <img src="{{ random_mid.cover_url }}" class="card-img-top" alt="{{ random_mid.cover_alt_text}}"
+                                             style="min-width: 18rem; height: 300px; object-fit:cover"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ random_mid.title }}</h5>
+                                            <p class="card-text">{{ random_mid.description }}</p>
+                                            <a href="{{ url_for("audioplayer", med_id=random_mid.id) }}"
+                                               class="btn btn-light">Play</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                    disabled>{{ random_mid.time }} min
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <h1>Long Meditation</h1>
+                                    <div class="card">
+                                        <img src="{{ random_long.cover_url }}" class="card-img-top" alt="{{ random_long.cover_alt_text}}"
+                                             style="min-width: 18rem; height: 300px; object-fit:cover"/>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ random_long.title }}</h5>
+                                            <p class="card-text">{{ random_mid.description }}</p>
+                                            <a href="{{ url_for("audioplayer", med_id=random_long.id) }}"
+                                               class="btn btn-light">Play</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                    disabled>{{ random_long.time }} min
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            {% else %}
+                <div class="welcome">
+                    <img src="{{ url_for('static',filename='images/logo.png') }}" class="rounded mx-auto d-block" alt="logo mind"
+                         style="width: 150px; height: auto">
+                    <h1>Welcome</h1>
+                    <p>Thank you for choosing Mind.</p>
+                    <p>Life can be stressful.<br>
+                        We can't change that, but we can help you change how you react to that stress - with
+                        mindfulness. <br>
+                        Mind. Makes mindfulness easy.</p>
+
+                    <a class="btn btn-warning" href="{{ url_for("login") }}" role="button">Click here to Login!</a>
+                    <a class="btn btn-warning" href="{{ url_for("register") }}" role="button">Click here to
+                        Register!</a>
+                </div>
+            {% endif %}
+
+
+
+{% endblock %}

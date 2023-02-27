@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block bodycontent %}
+    <div class="container">
+        <div class="register">
+
+            <div class="card mx-auto" style="background-color: #dfb5a7; width: 700px; margin-bottom: 30px">
+                <h1 class="card-title">With Mind you get:</h1>
+                <div class="card-body">
+                    <p>A daily selection of guided audio meditations, so you don't have to spend your precious time on
+                        finding "the right one". <br>
+                        A library full of exercises for different areas of your life. <br>
+                        A customizable SOS toolbox so you are equipped for stressful situations. <br>
+                        A streak tracker to encourage a regular practice</p>
+                </div>
+            </div>
+
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }} <br>
+                    {{ form.username(size=32) }}<br>
+                    {% for error in form.username.errors %}
+                        <span style="color: red;"> [{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    {{ form.email.label }} <br>
+                    {{ form.email(size=32) }}<br>
+                    {% for error in form.email.errors %}
+                        <span style="color: red;"> [{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password.label }} <br>
+                    {{ form.password(size=32) }}<br>
+                    {% for error in form.password.errors %}
+                        <span style="color: red;"> [{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password2.label }} <br>
+                    {{ form.password2(size=32) }}<br>
+                    {% for error in form.password2.errors %}
+                        <span style="color: red;"> [{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

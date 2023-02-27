@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+
+    <div class="container">
+    <div class="about">
+        <div class="text-center">
+            <iframe src="https://giphy.com/embed/1xlpHG63hflTdo2s3P" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/cat-spin-yin-yang-1xlpHG63hflTdo2s3P" alt="This is for you! Cat Spinning">via GIPHY</a></p>
+        </div>
+
+        <p class="card-text text-center"> Life can be stressful.<br>
+            We can't change that, but we can help you change how you react to that stress - with mindfulness. <br>
+            Mind. Makes mindfulness easy.</p>
+
+
+        <div class="card">
+            <div class="text-center">
+                <h5 class="card-title">The Team</h5>
+                <div class="categories">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+
+
+                        <div class="col-sm-3">
+                            <div class="card text-center">
+                                <img src="{{ url_for('static',filename='images/emily.jpg') }}" class="card-img" alt=""
+                                     style="min-width: 200px; height: 300px; object-fit:cover"/>
+                                <div class="card-img-overlay">
+                                    <h5 class="card-title">Emily Joy Neumann</h5>
+                                    <p class="card-text">Web Development</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="card text-center">
+                                <img src="{{ url_for('static',filename='images/lennart.jpg') }}" class="card-img" alt=""
+                                     style="min-width: 200px; height: 300px; object-fit:cover"/>
+                                <div class="card-img-overlay">
+                                    <h5 class="card-title">Lennart Inzelmann</h5>
+                                    <p class="card-text">Web Development</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+    </div>
+
+
+{% endblock %}

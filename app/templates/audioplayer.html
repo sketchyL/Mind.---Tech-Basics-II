@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+
+    <div class="mt-0">
+        <div class="help">
+            <div class="text-center">
+                <button type="button" class="btn btn-secondary-help mx-auto" data-bs-toggle="modal"
+                        data-bs-target="#help_favorites">
+                    Help
+                </button>
+            </div>
+            <div class="modal fade" id="help_favorites" tabindex="-1" role="dialog"
+                 aria-labelledby="help_favorites_modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Help Favorites</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <p>In this list you can find all your favourite exercises.
+
+                                To favourite an exercise, simply tap the bookmark icon on the exercise card.</p>
+                            <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="audio_1">
+                <h1>{{ selection.title }}</h1>
+
+                <!--    https://stackoverflow.com/a/52679456 accessed 29th January 2023 -->
+                {% if current_user.is_authenticated %}
+                    {% if current_user.has_favorited_med(med) %}
+                        <a href="{{ url_for('favorite_action', med_id=med.id, action='unfavorite') }}"
+                           aria-labelledby="Unfavorite" class="btn btn-secondary-help">Unfavorite</a>
+                    {% else %}
+                        <a href="{{ url_for('favorite_action', med_id=med.id, action='favorite') }}"
+                           aria-labelledby="Favorite" class="btn btn-secondary-help">Favorite</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="card"><img class="card-img-top card-img-audio" src="{{ selection.cover_url }}" alt="{{ selection.cover_alt_text }}"
+                                   style="height: 400px; width: auto; object-fit:cover"/>
+                <audio controls style="width: auto">
+                    <source src="{{ selection.mp3_url }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

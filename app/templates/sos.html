@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+
+    <div class="help">
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary-help mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#help_favorites">
+                Help
+            </button>
+        </div>
+        <div class="modal fade" id="help_favorites" tabindex="-1" role="dialog" aria-labelledby="help_favorites_modal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">SOS</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>This page is designed to give you quick access to exercises that are useful for you in
+                            emergency situations.
+
+                            You can customize this list by tapping the button "Select". You can always adapt this list
+                            again, if you find another exercise you prefer to have in your toolbox.</p>
+                        <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="sos">
+
+            <!-- Sos Meditation 1-->
+            <div class="card-sos">
+                <div class="card text-center">
+                    <img src="{{ sos_med1.cover_url }}" class="card-img" alt="{{ sos_med1.cover_alt_text }}"
+                         style="min-width: 18rem; height: 200px; object-fit:cover"/>
+                    <div class="card-img-overlay">
+                        <h1 class="card-title">You chose this meditation: {{ sos_med1.title }}</h1>
+                        {% if sos_med1 %}
+                            <a href="{{ url_for("audioplayer", med_id=sos_med1.id) }}"
+                               class="btn btn-primary-sos">Play</a>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary-sos" data-bs-toggle="modal"
+                                data-bs-target="#sos_selection1_modal">
+                            Select SOS Meditation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="sos_selection1_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="sos_selection1_modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Categories SOS 1</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                            {% for category in all_categories %}
+                                <div class="card-sos">
+                                    <div class="card text-center">
+                                        <img src="{{ category.cat_img_url }}" alt="{{ category.cat_img_alt_text }}"
+                                             style="min-width: 290px; height: 100px; object-fit:cover; border-radius: 15px"/>
+                                        <div class="card-img-overlay">
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#{{ category.id }}modal_1">
+                                                {{ category.cat_name }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- category specific modal-->
+            {% for category in all_categories %}
+                <div class="modal fade" id="{{ category.id }}modal_1" tabindex="-1" role="dialog"
+                     aria-labelledby="{{ category.id }}_modal_1" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select your first SOS meditation.</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                <form action="{{ url_for("sos") }}" method="post">
+                                    <!--input type="hidden" name="sos_selection_form" value="form2"-->
+                                    {% for meditation in all_meditations %}
+                                        {% if meditation.category == category.id %}
+                                            <p>
+                                                <input type="radio" id="{{ meditation.title }}"
+                                                       value="{{ meditation.id }}" name="sos_meditation1">
+                                            <div class="card" style="min-width: 18rem;">
+                                                <img class="card-img-top" src="{{ meditation.cover_url }}"
+                                                     alt="{{ meditation.cover_alt_text }}"
+                                                     style="min-width: 300px; height: 150px; object-fit:cover"/></div>
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ meditation.title }}</h5>
+                                            </div>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                    <input id="form1_submit" name="form1_submit" type="submit"
+                                           value="Choose meditation">
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!--Sos Meditation 2-->
+
+            <div class="card-sos">
+                <div class="card text-center">
+                    <img src="{{ sos_med2.cover_url }}" class="card-img" alt="{{ sos_med2.cover_alt_text }}"
+                         style="min-width: 18rem; height: 200px; object-fit:cover"/>
+                    <div class="card-img-overlay">
+                        <h1 class="card-title">You chose this meditation: {{ sos_med2.title }}</h1>
+                        {% if sos_med2 %}
+                            <a href="{{ url_for("audioplayer", med_id=sos_med2.id) }}"
+                               class="btn btn-primary-sos">Play</a>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary-sos" data-bs-toggle="modal"
+                                data-bs-target="#sos_selection2_modal">
+                            Select SOS Meditation
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="sos_selection2_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="sos_selection2_modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Categories SOS 2</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!--input type="hidden" name="sos_selection_form2" value="form2"-->
+                            {% for category in all_categories %}
+                                <div class="card-sos">
+                                    <div class="card text-center">
+                                        <img src="{{ category.cat_img_url }}" alt="{{ category.cat_img_alt_text }}"
+                                             style="min-width: 290px; height: 100px; object-fit:cover; border-radius: 15px"/>
+                                        <div class="card-img-overlay">
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#{{ category.id }}modal_2">
+                                                {{ category.cat_name }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card-body">
+                                    <!-- <h5 class="card-title">{{ category.cat_name }}</h5> -->
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- category specific modal-->
+            {% for category in all_categories %}
+                <div class="modal fade" id="{{ category.id }}modal_2" tabindex="-1" role="dialog"
+                     aria-labelledby="{{ category.id }}_modal_2" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select your second SOS meditation.</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                <form action="{{ url_for("sos") }}" method="post">
+                                    <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                                    {% for meditation in all_meditations %}
+                                        {% if meditation.category == category.id %}
+                                            <p>
+                                                <input type="radio" id="{{ meditation.title }}"
+                                                       value="{{ meditation.id }}" name="sos_meditation2">
+                                            <div class="card" style="min-width: 18rem;">
+                                                <img class="card-img-top" src="{{ meditation.cover_url }}"
+                                                     alt="{{ meditation.cover_alt_text }}"
+                                                     style="min-width: 300px; height: 150px; object-fit:cover"/></div>
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ meditation.title }}</h5>
+                                            </div>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                    <input id="form2_submit" name="form2_submit" type="submit"
+                                           value="Choose meditation">
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!--Sos Meditation 3-->
+
+            <div class="card-sos">
+                <div class="card text-center">
+                    <img src="{{ sos_med3.cover_url }}" class="card-img" alt="{{ sos_med3.cover_alt_text }}"
+                         style="min-width: 18rem; height: 200px; object-fit:cover"/>
+                    <div class="card-img-overlay">
+                        <h1 class="card-title">You chose this meditation: {{ sos_med3.title }}</h1>
+                        {% if sos_med3 %}
+                            <a href="{{ url_for("audioplayer", med_id=sos_med3.id) }}"
+                               class="btn btn-primary-sos">Play</a>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary-sos" data-bs-toggle="modal"
+                                data-bs-target="#sos_selection3_modal">
+                            Select SOS Meditation
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="sos_selection3_modal" tabindex="-1" role="dialog"
+                 aria-labelledby="sos_selection3_modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Categories for SOS 3</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!--input type="hidden" name="sos_selection_form2" value="form2"-->
+                            {% for category in all_categories %}
+                                <div class="card-sos">
+                                    <div class="card text-center">
+                                        <img src="{{ category.cat_img_url }}" alt="{{ category.cat_img_alt_text}}"
+                                             style="min-width: 290px; height: 100px; object-fit:cover; border-radius: 15px"/>
+                                        <div class="card-img-overlay">
+                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#{{ category.id }}modal_3">
+                                                {{ category.cat_name }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <!-- <h5 class="card-title">{{ category.cat_name }}</h5> -->
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- category specific modal-->
+            {% for category in all_categories %}
+                <div class="modal fade" id="{{ category.id }}modal_3" tabindex="-1" role="dialog"
+                     aria-labelledby="{{ category.id }}_modal_3" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select your third SOS meditation.</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                <form action="{{ url_for("sos") }}" method="post">
+                                    <!--input type="hidden" name="sos_selection_form" value="form1"-->
+                                    {% for meditation in all_meditations %}
+                                        {% if meditation.category == category.id %}
+                                            <p>
+                                                <input type="radio" id="{{ meditation.title }}"
+                                                       value="{{ meditation.id }}" name="sos_meditation3">
+                                            <div class="card" style="min-width: 18rem;">
+                                                <img class="card-img-top" src="{{ meditation.cover_url }}"
+                                                     alt="{{ meditation.cover_alt_text }}"
+                                                     style="min-width: 300px; height: 150px; object-fit:cover"/></div>
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ meditation.title }}</h5>
+                                            </div>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                    <input id="form3_submit" name="form3_submit" type="submit"
+                                           value="Choose meditation">
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+

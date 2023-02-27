@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+    <div class="mt-0">
+        <div class="library1">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for item in med_selection %}
+                        <div class="col">
+                            <div class="card text-bg-light h-100" style="width: auto">
+                                <img src="{{ item.cover_url }}" class="card-img-top" alt="{{ item.cover_alt_text }}"
+                                     style="min-width: 100px; height: 250px; object-fit:cover"/>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.title }}</h5>
+                                    <p class="card-text">{{ item.description }}</p>
+                                    <a href="{{ url_for("audioplayer", med_id=item.id) }}"
+                                       class="btn btn-light">Play</a>
+                                    <button type="button" class="btn btn-secondary" disabled>{{ item.time }} min
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

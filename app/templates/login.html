@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block bodycontent %}
+
+    <div class="welcome">
+        <h1>
+            Ready to relax?
+        </h1>
+    </div>
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}
+            {{ form.username(size=32) }}
+        </p>
+        <p>
+            {{ form.password.label }}
+            {{ form.password(size=32) }}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}
+        </p>
+        <p>
+            {{ form.submit() }}
+
+        </p>
+        <p>New user? <a class="btn btn-warning" href="{{ url_for("register") }}" role="button" style="">Click here to
+            Register!</a></p>
+
+    </form>
+
+{% endblock %}
